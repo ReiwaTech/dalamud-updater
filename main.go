@@ -72,13 +72,11 @@ func main() {
 	if localVersion == latest.AssemblyVersion {
 		fmt.Println("Local version is already latest")
 	} else {
-		if localVersion != "" {
-
-		}
-
 		// download latest file from github
 		fmt.Println("Downloading from Github ...")
-		resp, err := util.Download(downloadDir, util.GetArchiveUrl(channel))
+		fileName := fmt.Sprintf("dalamud-%s-%s.zip", channel, latest.AssemblyVersion)
+		resp, err := util.Download(path.Join(downloadDir, fileName), util.GetArchiveUrl(channel))
+
 		if err != nil {
 			panic(err)
 		}
