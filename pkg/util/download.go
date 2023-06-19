@@ -78,7 +78,7 @@ func DownloadBatch(worker int, requests ...*grab.Request) error {
 						hasErr = true
 					} else {
 						fmt.Printf(
-							"Finished %s / %s (%.2f%%)\n",
+							"Finished %s %s / %s (%.2f%%)\n",
 							resp.Filename,
 							HumanSize(float64(resp.BytesComplete())),
 							HumanSize(float64(resp.Size())),
@@ -97,7 +97,7 @@ func DownloadBatch(worker int, requests ...*grab.Request) error {
 				if resp != nil {
 					inProgress++
 					fmt.Printf(
-						"Downloading %s / %s (%.2f%%)\033[K\n",
+						"Downloading %s %s / %s (%.2f%%)\033[K\n",
 						resp.Filename,
 						HumanSize(float64(resp.BytesComplete())),
 						HumanSize(float64(resp.Size())),
