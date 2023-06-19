@@ -66,6 +66,7 @@ func main() {
 	fmt.Println("  Runtime version :", latest.RuntimeVersion)
 
 	downloadDir := path.Join(dir, "download")
+	os.MkdirAll(downloadDir, 0755)
 
 	// update dalamud
 	if localVersion == latest.AssemblyVersion {
