@@ -37,6 +37,10 @@ func IsFile(path string) bool {
 func ReadNumber(path string) (num int) {
 	fd, err := os.Open(path)
 	if err != nil {
+		if os.IsNotExist(err) {
+			return -1
+		}
+
 		panic(fmt.Sprintf("open %s: %v", path, err))
 	}
 
