@@ -64,3 +64,14 @@ func WriteNumber(path string, num int) error {
 	_, err = fmt.Fprintf(fd, "%d", num)
 	return err
 }
+
+func WriteString(path string, str string) error {
+	fd, err := os.Create(path)
+	if err != nil {
+		panic(fmt.Sprintf("open %s: %v", path, err))
+	}
+
+	defer fd.Close()
+	_, err = fmt.Fprint(fd, str)
+	return err
+}

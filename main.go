@@ -135,9 +135,29 @@ func main() {
 		fmt.Println("Downloading from Github ...")
 
 		reqs := []*grab.Request{}
+	assets:
 		for i := 0; i < len(latestAssets.Assets); i++ {
 			row := latestAssets.Assets[i]
 			filename := path.Join(assetsDir, path.Clean(row.FileName))
+
+			// check overrides
+			for j := 0; j < len(preset.AssetsOverride); j += 2 {
+				rule := preset.AssetsOverride[j]
+				override := preset.AssetsOverride[j+1]
+
+				if rule == row.FileName {
+					fmt.Printf("Overriding %s with %s\n", rule, override)
+
+					if strings.HasPrefix(override, "https://") {
+						row.URL = override
+						row.Hash = ""
+						break
+					}
+
+					util.WriteString(rule, override)
+					continue assets
+				}
+			}
 
 			if row.Hash != "" {
 				hash, err := util.Sha1(filename)
