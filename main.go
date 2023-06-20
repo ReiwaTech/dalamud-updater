@@ -154,7 +154,7 @@ func main() {
 						break
 					}
 
-					util.WriteString(rule, override)
+					util.WriteString(filename, override)
 					continue assets
 				}
 			}
