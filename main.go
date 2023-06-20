@@ -2,6 +2,7 @@ package main
 
 import (
 	"dalamud-updater/pkg/api"
+	"dalamud-updater/pkg/preset"
 	"dalamud-updater/pkg/util"
 	"fmt"
 	"os"
@@ -97,12 +98,7 @@ func main() {
 
 	// update runtime
 	fmt.Println("Checking runtimes ...")
-	runtimes := [...]string{
-		fmt.Sprintf("shared/Microsoft.NETCore.App/%s", latest.RuntimeVersion),
-		util.GetDotNetRuntimeUrl(latest.RuntimeVersion),
-		fmt.Sprintf("shared/Microsoft.WindowsDesktop.App/%s", latest.RuntimeVersion),
-		util.GetDotNetWDRuntimeUrl(latest.RuntimeVersion),
-	}
+	runtimes := preset.GetRuntimes(latest.RuntimeVersion)
 
 	for i := 0; i < len(runtimes); i += 2 {
 		if util.IsDir(path.Join(dir, "runtime", runtimes[i])) {
@@ -171,20 +167,19 @@ func main() {
 	// update fonts
 	fmt.Println("Checking fonts ...")
 	installedFonts := viper.GetStringSlice("fonts")
-	fonts := [...]string{
-		"UIRes/NotoSansCJKsc-Regular.otf",
-		util.NotoSansCJKscRegular,
-		"UIRes/NotoSansCJKsc-Medium.otf",
-		util.NotoSansCJKscMedium,
-	}
 
-	for i := 0; i < len(fonts); i += 2 {
-		font := fonts[i]
+	for i := 0; i < len(preset.Fonts); i += 2 {
+		font := preset.Fonts[i]
+		fileName := path.Join(assetsDir, font)
 		if util.Contains[string](installedFonts, font) {
 			continue
 		}
 
-		resp, err := util.Download(path.Join(assetsDir, font), fonts[i+1])
+		if util.IsFile(fileName) {
+			os.Remove(fileName)
+		}
+
+		resp, err := util.Download(fileName, preset.Fonts[i+1])
 		if err != nil {
 			panic(err)
 		}
