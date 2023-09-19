@@ -11,6 +11,8 @@ import (
 func Download(dst string, urlStr string) (*grab.Response, error) {
 	// create client
 	client := grab.NewClient()
+	client.UserAgent = "wget/1.21.4"
+
 	req, _ := grab.NewRequest(dst, urlStr)
 
 	// start download
