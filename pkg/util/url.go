@@ -2,12 +2,12 @@ package util
 
 import "fmt"
 
-const distrib = "https://github.com/ReiwaTech/dalamud-distrib/raw/main"
+const distrib = "https://reiwatech.github.io/dalamud-distrib"
 const dotnet = "https://dotnetcli.azureedge.net/dotnet"
 
 const DalamudAssets = "https://raw.githubusercontent.com/goatcorp/DalamudAssets/master/asset.json"
-const NotoSansCJKscRegular = "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf"
-const NotoSansCJKscMedium = "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Medium.otf"
+const NotoSansCJKscRegular = "https://mirrors.tuna.tsinghua.edu.cn/ctan/fonts/notocjksc/NotoSansCJKsc-Regular.otf"
+const NotoSansCJKscMedium = "https://mirrors.tuna.tsinghua.edu.cn/ctan/fonts/notocjksc/NotoSansCJKsc-Medium.otf"
 
 func GetVersionUrl(channel string) string {
 	return fmt.Sprintf("%s/%s/version", distrib, channel)
