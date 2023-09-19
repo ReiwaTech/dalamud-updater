@@ -6,7 +6,7 @@
 | \(/_|\/\/(_||(/_(_| |  |   Updater
 ```
 
-A dalamud solution without XIVLauncher for CN
+A dalamud solution without XIVLauncher for CN. Please read [Dalamud#readme](https://github.com/ReiwaTech/Dalamud#readme) before using anything in this repository.
 
 ## Usage
 
