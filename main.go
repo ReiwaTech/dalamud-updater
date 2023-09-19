@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/cavaliergopher/grab/v3"
@@ -67,7 +68,7 @@ func main() {
 	fmt.Println("  Runtime version :", latest.RuntimeVersion)
 
 	downloadDir := path.Join(dir, "download")
-	os.MkdirAll(downloadDir, 0755)
+	os.MkdirAll(downloadDir, os.ModePerm)
 
 	// update dalamud
 	if localVersion == latest.AssemblyVersion {
@@ -139,6 +140,7 @@ func main() {
 		for i := 0; i < len(latestAssets.Assets); i++ {
 			row := latestAssets.Assets[i]
 			filename := path.Join(assetsDir, path.Clean(row.FileName))
+			os.MkdirAll(filepath.Dir(filename), os.ModePerm)
 
 			// check overrides
 			for j := 0; j < len(preset.AssetsOverride); j += 2 {
