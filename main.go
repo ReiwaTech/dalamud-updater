@@ -58,7 +58,7 @@ func main() {
 		viper.Set("Channel", channel)
 	}
 
-releasePath := path.Join(dir, "Release")
+	releasePath := path.Join(dir, "Release")
 	dllPath := path.Join(releasePath, "Dalamud.dll")
 
 	localVersion, err := util.GetDLLVersion(dllPath)
@@ -95,6 +95,9 @@ releasePath := path.Join(dir, "Release")
 		}
 
 		fmt.Println("Download saved to", resp.Filename)
+		fmt.Println("Removing old version")
+		os.RemoveAll(releasePath)
+
 		fmt.Println("Unziping ...")
 
 		if err := util.Unzip(resp.Filename, releasePath); err != nil {
