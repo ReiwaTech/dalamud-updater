@@ -58,7 +58,18 @@ func main() {
 		viper.Set("Channel", channel)
 	}
 
-	localVersion := viper.GetString("Version")
+releasePath := path.Join(dir, "Release")
+	dllPath := path.Join(releasePath, "Dalamud.dll")
+
+	localVersion, err := util.GetDLLVersion(dllPath)
+	if err != nil {
+		fmt.Println("Error reading local version: ", err)
+		if !util.Confirm("Continue?", true) {
+			fmt.Println("No - Exiting")
+			return
+		}
+	}
+
 	fmt.Println("Requesting Github for latest version ...")
 	fmt.Println("  Channel         :", channel)
 	fmt.Println("  Local Version   :", localVersion)
@@ -86,13 +97,7 @@ func main() {
 		fmt.Println("Download saved to", resp.Filename)
 		fmt.Println("Unziping ...")
 
-		if err := util.Unzip(resp.Filename, path.Join(dir, "Release")); err != nil {
-			panic(err)
-		}
-
-		// save current version
-		viper.Set("Version", latest.AssemblyVersion)
-		if err := viper.WriteConfig(); err != nil {
+		if err := util.Unzip(resp.Filename, releasePath); err != nil {
 			panic(err)
 		}
 	}
