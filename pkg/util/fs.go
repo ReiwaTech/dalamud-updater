@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 func GetWorkingDir() string {
@@ -55,6 +56,7 @@ func ReadNumber(path string) (num int) {
 }
 
 func WriteNumber(path string, num int) error {
+	os.MkdirAll(filepath.Dir(path), os.ModePerm)
 	fd, err := os.Create(path)
 	if err != nil {
 		panic(fmt.Sprintf("open %s: %v", path, err))
@@ -66,6 +68,7 @@ func WriteNumber(path string, num int) error {
 }
 
 func WriteString(path string, str string) error {
+	os.MkdirAll(filepath.Dir(path), os.ModePerm)
 	fd, err := os.Create(path)
 	if err != nil {
 		panic(fmt.Sprintf("open %s: %v", path, err))
